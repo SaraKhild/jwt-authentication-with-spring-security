@@ -118,7 +118,7 @@ public class JwtService {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return Optional.of(authHeader.substring(7));
         } else {
-            throw new RuntimeException("Invalid JWT token");
+           return Optional.empty();
         }
     }
 
