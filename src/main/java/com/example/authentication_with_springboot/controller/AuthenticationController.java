@@ -49,25 +49,19 @@ public class AuthenticationController {
     JWT is stateless, meaning once issued, it can’t be revoked unless you track it somehow — like with a token blacklist, expiration, or client-side deletion.
     On logout, store the token in the blacklist until it expires.
     */
-    @PostMapping("/logout") // TODO:
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
 
-        if(jwtService.extractTokenFromRequest(request).isPresent()){
-            log.info("*****" + String.valueOf(jwtService.extractTokenFromRequest(request).isPresent()));
-            userService.logout(jwtService.extractTokenFromRequest(request).get());
-            return ResponseEntity.ok("Successfully logged out.");
-        }
-        else {
+        if (jwtService.extractTokenFromRequest(request).isPresent()) {
+            try {
+                userService.logout(jwtService.extractTokenFromRequest(request).get());
+                return ResponseEntity.ok("Successfully logged out.");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token, please try again");
+            }
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No JWT token found.");
         }
-
-        // ***************************another way****************************************
-//        String authHeader = request.getHeader("Authorization");
-//        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-//            userService.logout(authHeader.substring(7));
-//            return ResponseEntity.ok("Successfully logged out.");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No JWT token found.");
-//        }
     }
+
 }

@@ -29,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // A service that loads user info from the database by email (or username).
     private final CustomUserDetailsService customUserDetailsService;
 
-
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     public JwtAuthenticationFilter(JwtService jwtService, CustomUserDetailsService customUserDetailsService, RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
@@ -115,4 +114,3 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
 }
-

@@ -1,11 +1,14 @@
 package com.example.authentication_with_springboot.configuration.security;
 
+import com.example.authentication_with_springboot.exception.RestAuthenticationEntryPoint;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.IOException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,10 +20,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-
-//contains the business login of jwt.
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class JwtService {
 
     // secret key  jwt
@@ -31,6 +33,7 @@ public class JwtService {
     private Long jwtExpiresMinutes;
 
     private final Map<String, Instant> blacklist = new ConcurrentHashMap<>();
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     // generates a JWT token from  username
     public String generateToken(String username) {
@@ -120,7 +123,7 @@ public class JwtService {
     }
 
     // when user logout
-    public void blacklistUser(String token) {
+    public void blacklistUser(String token) throws IOException {
 
         Claims claims = extractAllClaims(token);
         Date expiration = claims.getExpiration();
@@ -131,6 +134,5 @@ public class JwtService {
 
         return blacklist.containsKey(token);
     }
-
 
 }
