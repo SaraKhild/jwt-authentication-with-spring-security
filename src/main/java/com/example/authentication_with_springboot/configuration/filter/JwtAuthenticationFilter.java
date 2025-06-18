@@ -26,6 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // A custom service to extract and validate JWT tokens.
     private final JwtService jwtService;
 
+//    private static final String[] excludedEndpoints = new String[]{"/api/auth", "/api/public-resource"};
+
     // A service that loads user info from the database by email (or username).
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -109,8 +111,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+
         String path = request.getRequestURI();
-        return path.startsWith("/api/auth/");
+        return path.startsWith("/api/auth") || path.startsWith("/api/public-resource");
+        //*****************another way******************
+//       return Arrays.stream(excludedEndpoints).anyMatch(excludedEndpoint -> request.getRequestURI().startsWith(excludedEndpoint));
     }
 
 }

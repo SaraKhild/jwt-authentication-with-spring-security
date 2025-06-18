@@ -5,6 +5,7 @@ import com.example.authentication_with_springboot.exception.RestAuthenticationEn
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,7 +42,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((auth) ->
                         auth
-                                //.requestMatchers(HttpMethod.GET, "api/**").permitAll() //Anyone can access it
+                                .requestMatchers(HttpMethod.GET, "api/public-resource").permitAll() //Anyone can access it
                                 .requestMatchers("api/auth/**").permitAll() //  Everything else requires login (a valid token)
                                 .anyRequest().authenticated()
                 )
