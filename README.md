@@ -110,13 +110,9 @@ In this tutorial, we will build a user authentication service using  <strong>Spr
 
 https://github.com/user-attachments/assets/91db9d20-4c42-47e1-88e5-0e3a94a93770
 
-##### :pencil2: This video shows what happens when a client attempts to access `a protected API` without providing a valid JWT token. It highlights how the backend properly returns `an unauthorized (401)` response, demonstra
+##### :pencil2: This video shows what happens when a client attempts to access `a protected API` without providing a valid JWT token. It highlights how the backend properly returns `an unauthorized (401)` response, demonstrating JWT-based access control in action.
 
 https://github.com/user-attachments/assets/b7540750-f46b-446a-bd36-148e1916fe02
-
-
-ting JWT-based access control in action.
-
 
 ---
 
