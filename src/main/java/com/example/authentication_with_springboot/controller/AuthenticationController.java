@@ -30,9 +30,12 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupDto signupDto) {
 
-        User user = userService.signup(signupDto);
-
-        return new ResponseEntity<>(user.getUsername() + " Signup Successfully ", HttpStatus.CREATED);
+        try {
+            User user = userService.signup(signupDto);
+            return new ResponseEntity<>(user.getUsername() + " Signup Successfully ", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/login")
